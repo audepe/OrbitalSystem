@@ -3,48 +3,49 @@ class Planet{
   String name;
   int radius;
   float angle;
+  float secondAngle;
   float velocity;
   float offsetPosition;
-  PVector colorVal;
   ArrayList<Planet> satelites;
-
+  PImage texture;
+  PShape shape;
+  boolean translation;
   
-  Planet(String name, int radius, float velocity, int offsetPosition, PVector colorVal){
+  Planet(String name, int radius, float velocity, float offsetPosition, PImage texture, boolean translation){
     this.name = name;
     this.radius = radius;
     this.velocity = velocity;
     this.offsetPosition = offsetPosition;
     this.angle = 0;
+    this.secondAngle = 0;
     this.satelites = new ArrayList<Planet>();
-    this.colorVal = colorVal;
+    this.texture = texture;
+    this.translation = translation;
+    
+    shape = createShape(SPHERE,radius);
+    shape.setTexture(texture);
+    shape.setStroke(100);
   }
   
-  Planet(){
-    this.radius = floor(random(10,30));
-    this.name = "Kashyyyk";
-    this.velocity = random(1);
-    this.offsetPosition = 50;
-    this.angle = 0;
-    satelites = new ArrayList<Planet>();
-    this.colorVal = new PVector(random(255),random(255),random(255));
-  }
-  
-  void draw(){
-    text(name,radius,0);
-    fill(colorVal.x,colorVal.y,colorVal.z);
-    box(this.radius);
-    
-    
+  void draw(){    
+    rotateY(radians(angle));
+    pushMatrix();
+    if(translation){
+      rotateZ(radians(this.angle));
+      translate(-width*0.1 + (-width *0.25 * (this.offsetPosition)*0.05), 25*this.offsetPosition*0.05,0);     
+    }
+    texture(this.texture);
+    shape(shape);
+    textAlign(CENTER);
+    textSize(20);
+    text(name,radius-15,-radius);
     if(satelites != null){
-      for (Planet p : satelites){
-        pushMatrix();
-        rotateZ(radians(p.angle));
-        translate(-width*0.1 + ((-width*0.25)/nPlanets * planets.indexOf(p)) ,25,0);
-        p.draw();
-        popMatrix();    
-        p.updateAngle();
+      for (Planet p : satelites){        
+        p.draw();        
       }
     }
+    popMatrix();    
+    this.updateAngle();
   }
   
   void addSatelite(Planet satelite){
@@ -52,9 +53,13 @@ class Planet{
   }
   
   void updateAngle(){
-    this.angle += this.velocity;
+    this.angle += this.velocity*0.5;
     if (this.angle > 360){
       this.angle = 0;
+    }
+    this.secondAngle += this.velocity*0.25;
+    if (this.secondAngle > 360){
+      this.secondAngle = 0;
     }
   }
 }

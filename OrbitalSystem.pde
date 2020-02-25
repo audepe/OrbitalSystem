@@ -1,7 +1,5 @@
-float ang;
-int nPlanets;
 PImage back;
-ArrayList<Planet> planets;
+Planet star;
 
 void setup(){
   size(1280,720,P3D);
@@ -9,58 +7,34 @@ void setup(){
   
   imageMode(CENTER);
   
-  back = loadImage("background.jpg");
+  back = loadImage("assets/background-alt.jpg");
+ 
+  star = new Planet("",100,0.5,0,loadImage("assets/startexture.jpg"),false);
   
-  ang=0;
+  Planet test1 = new Planet("Monnion",10,4*0.25,0.5,loadImage("assets/texture1.gif"),true);
+  Planet test2 = new Planet("Selnuimia",20,3*0.25,5,loadImage("assets/texture2.gif"),true);
+  Planet test3 = new Planet("Lozarth",60,2*0.25,12,loadImage("assets/texture3.gif"),true);
+  Planet test4 = new Planet("Dulnarth",30,1*0.25,20,loadImage("assets/texture4.gif"),true);
+  Planet test5 = new Planet("Oagantu",20,0.5*0.25,25,loadImage("assets/texture5.gif"),true);
   
-  planets = new ArrayList<Planet>();
-  /*
-  nPlanets = 5;
+  Planet satellite1 = new Planet("Theomia",10,3*0.25,0.5,loadImage("assets/texture6.gif"),true);
   
+  test3.addSatelite(satellite1);
   
-  for(int i = 0; i < nPlanets; i++){
-    planets.add(new Planet());
-  }
-  */
+  star.addSatelite(test1);
+  star.addSatelite(test2);
+  star.addSatelite(test3);
+  star.addSatelite(test4);
+  star.addSatelite(test5); 
   
-  Planet test1 = new Planet("1",10,0.25,0,new PVector(0,0,255));
-  Planet test2 = new Planet("2",20,2*0.25,0,new PVector(0,255,0));
-  Planet test3 = new Planet("3",30,3*0.25,0,new PVector(255,0,0));
-  
-  test3.addSatelite(test1);
-  
-  planets.add(test1);
-  planets.add(test2);
-  planets.add(test3);
-  
-  nPlanets = planets.size();
+  back.resize(width,height);
 }
 
 void draw(){
   background(200);
   
   translate(width/2, height/2,0);
-  //rotateX(radians(-45));
+  background(back);  
   
-  image(back,0,0);
-  
-  pushMatrix();
-  rotateY(radians(ang));
-  sphere(100);
-  popMatrix();
-  
-  ang += 0.25;
-  if (ang > 360){
-    ang = 0;
-  }
-  
-  for(Planet p : planets){
-    pushMatrix();
-    rotateZ(radians(p.angle));
-    translate(-width*0.1 + ((-width*0.25)/nPlanets * planets.indexOf(p)) ,25,0);
-    p.draw();
-    popMatrix();
-    
-    p.updateAngle();
-  }
+  star.draw();
 }
