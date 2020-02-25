@@ -1,5 +1,9 @@
 PImage back;
 Planet star;
+PFont font;
+boolean rotateUY, rotateDY, rotateLX, rotateRX, splashScreen;
+float rXD, rYD;
+PVector textColor;
 
 void setup(){
   size(1280,720,P3D);
@@ -28,13 +32,89 @@ void setup(){
   star.addSatelite(test5); 
   
   back.resize(width,height);
+  
+  rotateUY = false;
+  rotateDY = false;
+  rotateLX = false;
+  rotateRX = false;
+  
+  splashScreen = true;
+  
+  rYD = 0.0;
+  rXD = 0.0;
+  
+  textColor = new PVector(255,110,243);
+  font = createFont("assets/RobotoCondensed-Bold.ttf",128);
+  textFont(font);
 }
 
 void draw(){
   background(200);
-  
   translate(width/2, height/2,0);
-  background(back);  
+  background(back);
   
-  star.draw();
+  if(splashScreen){
+    fill(textColor.x, textColor.y, textColor.z);
+    textAlign(CENTER);
+    textSize(128);
+    text("Orbital System",0,-100);
+    textSize(32);
+    text("WASD para rotar el sistema",0,+50);
+    text("Barra Espaciadora para empezar",0,+100);
+    
+    textColor.x += random(-10,10);
+    textColor.y += random(-10,10);
+    textColor.z += random(-10,10);
+    noFill();
+  } else {
+    rotateX(rXD);
+    rotateY(rYD);
+    control();
+    star.draw();
+  }
+  
+  
+}
+
+void control(){
+  if(rotateUY){
+    rXD += 0.05;
+  } else if (rotateDY){
+    rXD -= 0.05;
+  }
+  
+  if(rotateLX){
+    rYD -= 0.05;
+  } else if (rotateRX){
+    rYD += 0.05;
+  }
+}
+
+void keyPressed(){
+  if(key == ' '){
+    splashScreen = false;
+  }
+  if(key == 'w'){
+    rotateUY = true;
+  } else if(key == 's'){
+    rotateDY = true;
+  }
+  if(key == 'd'){
+    rotateRX = true;
+  } else if(key == 'a'){
+    rotateLX = true;
+  }  
+}
+
+void keyReleased(){
+  if(key == 'w'){
+    rotateUY = false;
+  } else if(key == 's'){
+    rotateDY = false;
+  }
+  if(key == 'd'){
+    rotateRX = false;
+  } else if(key == 'a'){
+    rotateLX = false;
+  }  
 }
