@@ -15,6 +15,6 @@ Aquí puede verse el programa en ejecución:
 ![Ejecución del programa](https://github.com/audepe/OrbitalSystem/blob/master/demo.gif)
 
 # Referencias
-* (Generador de Planetas)[https://donjon.bin.sh/scifi/world/index.cgi]
-* (Generador de Espacio)[https://wwwtyro.github.io/space-3d/]
-* (Generador de Nombres de Planetas)[https://www.fantasynamegenerators.com/planet_names.php]
+  [(Generador de Planetas](https://donjon.bin.sh/scifi/world/index.cgi)
+* [Generador de Espacio](https://wwwtyro.github.io/space-3d/)
+* [Generador de Nombres de Planetas](https://www.fantasynamegenerators.com/planet_names.php)
